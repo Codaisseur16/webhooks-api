@@ -4,7 +4,7 @@ import setupDb from './db'
 import UrlController from './webhooks-url/controller'
 import ForwardingController from './forwarding/controller';
 
-const port = process.env.PORT || 4008
+const port = process.env.PORT || 4004
 
 const app = createKoaServer({
   controllers: [
