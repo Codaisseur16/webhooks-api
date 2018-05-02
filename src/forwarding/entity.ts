@@ -1,5 +1,5 @@
 // src/forwarding/entity.ts
-import { Entity, PrimaryGeneratedColumn, Column, Timestamp } from 'typeorm'
+import { Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
 import { BaseEntity } from 'typeorm/repository/BaseEntity'
 
 // Set entity / types / nullable
@@ -15,10 +15,10 @@ export default class Forwarding extends BaseEntity {
   @Column('json', {nullable:false})
   qobject: JSON
 
-  @Column('integer', {nullable:false})
+  @Column('integer', {nullable:true})
   httpcode: number
 
-  @Column('integer', {nullable:false})
+  @Column('integer', {nullable:true})
   lasttry: number
 
 }
