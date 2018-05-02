@@ -12,7 +12,7 @@ export default class ForwardingController {
 
 
     @Post('/postquizresult')
-    @HttpCode(201)
+    @HttpCode(200)
     createUrl(
     @Body() body: Forwarding) {
     
@@ -21,7 +21,8 @@ export default class ForwardingController {
     forwarding.qobject = body.qobject
     forwarding.httpcode = body.httpcode
     forwarding.lasttry = 0
-    return forwarding.save()
+    forwarding.save()
+    return 'Ok'
     }
 
 }
