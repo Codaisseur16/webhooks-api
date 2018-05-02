@@ -4,7 +4,7 @@ import { BaseEntity } from 'typeorm/repository/BaseEntity'
 
 // Set entity / types / nullable
 @Entity()
-export default class forwarding extends BaseEntity {
+export default class Forwarding extends BaseEntity {
 
   @PrimaryGeneratedColumn()
   id?: number
@@ -18,7 +18,7 @@ export default class forwarding extends BaseEntity {
   @Column('integer', {nullable:false})
   httpcode: number
 
-  @Column('timestamp', {nullable:false})
-  lasttry: Timestamp
+  @Column('integer', {nullable:false})
+  lasttry: number
 
 }

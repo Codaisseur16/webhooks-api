@@ -1,10 +1,10 @@
 //src/db.ts
-
+import UrlTable from './webhooks-url/entity'
+import Forwarding from './forwarding/entity'
 import { createConnection } from 'typeorm'
 import { DefaultNamingStrategy } from 'typeorm/naming-strategy/DefaultNamingStrategy'
 import { NamingStrategyInterface } from 'typeorm/naming-strategy/NamingStrategyInterface'
 import { snakeCase } from 'typeorm/util/StringUtils'
-import UrlTable from './webhooks-url/entity'
 
 class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrategyInterface {
 
@@ -28,9 +28,10 @@ class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrate
 export default () =>
   createConnection({
     type: "postgres",
-    url: process.env.DATABASE_URL || 'postgres://codaisseur:pass@localhost:5432/codaisseur',
+    url: process.env.DATABASE_URL || 'postgres://codaisseur:pass@localhost:5432/postgres',
     entities: [
-      UrlTable
+      UrlTable,
+      Forwarding
     ],
     synchronize: true,
     logging: true,
