@@ -1,3 +1,4 @@
+//src/index.ts
 import 'reflect-metadata'
 import {createKoaServer} from "routing-controllers"
 import setupDb from './db'
