@@ -1,5 +1,5 @@
 // src/webhooks-url/controller.ts
-import { JsonController, Get, Param, Put, Body, NotFoundError,Post, HttpCode} from 'routing-controllers'
+import { JsonController, Put, Body,Post, HttpCode} from 'routing-controllers'
 import UrlTable from './entity'
 
 
@@ -20,6 +20,19 @@ export default class UrlController {
     
     return urltable.save()
     }
+
+    @Put('/editwebhook')
+    async updateWebhook(
+    @Body() body: UrlTable){
+
+    const urltable = await UrlTable.findOne({qid: body.qid})
+    if(urltable) {
+        urltable.qid = body.qid
+    urltable.url = body.url
+    return urltable.save()
+    }
+    return 'error'
+  }
 
 }
 
