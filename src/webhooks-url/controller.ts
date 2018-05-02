@@ -17,11 +17,12 @@ export default class UrlController {
     const urltable = new UrlTable()
     urltable.qid = body.qid
     urltable.url = body.url
-    
-    return urltable.save()
+    urltable.save()
+    return 'Saved!'
     }
 
     @Put('/editwebhook')
+    @HttpCode(200)
     async updateWebhook(
     @Body() body: UrlTable){
 
@@ -29,7 +30,8 @@ export default class UrlController {
     if(urltable) {
         urltable.qid = body.qid
     urltable.url = body.url
-    return urltable.save()
+    urltable.save()
+    return 'Saved'
     }
     return 'error'
   }
