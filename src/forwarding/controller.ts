@@ -24,22 +24,23 @@ export default class ForwardingController {
 
         // Send the object we recieved to the address from UrlTable
         if(address){
-            request
+            await request
             .post(address.url)
             .send(forwarding.qobject)
-            .end((err, res) => {
-                if(res)
-                console.log(res)
+            .then((result) => {
+                if(result)
+                forwarding.httpcode=200
                 else
-                console.log(err)
+                forwarding.httpcode=404
             })
-        }
-        else {console.log('error')}
-        forwarding.httpcode = body.httpcode
-        forwarding.lasttry = 0
+        
+        forwarding.lasttry = 10
         forwarding.save()
     return 'Great! It worked...'
-
+    }
+    else {
+        return true
+    }
     }
 
     // To test our Webhook we create a fake endpoint as a server that sometimes fails...
