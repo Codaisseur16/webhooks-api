@@ -1,5 +1,5 @@
 // src/forwarding/controller.ts
-import { JsonController, Body,Post, HttpCode} from 'routing-controllers'
+import { JsonController, Body,Post, HttpCode, NotFoundError } from 'routing-controllers'
 import Forwarding from './entity'
 import UrlTable from '../webhooks-url/entity'
 import * as request from 'superagent'
@@ -39,6 +39,21 @@ export default class ForwardingController {
         forwarding.lasttry = 0
         forwarding.save()
     return 'Great! It worked...'
+
+    }
+
+    // To test our Webhook we create a fake endpoint as a server that sometimes fails...
+    @Post('/testurl')
+    @HttpCode(200)
+    async sendResponse(
+    @Body() body: any) {
+        console.log('testurl/body', body)
+        const thouShallPass = (Math.floor(Math.random()*20)%2==0)?true:false
+        if (thouShallPass){
+            return 'Webhook success!'
+        } else {
+            throw new NotFoundError
+        }
 
     }
 
