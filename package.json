@@ -9,6 +9,7 @@
     "@types/koa-bodyparser": "^4.2.0",
     "@types/koa-multer": "^1.0.0",
     "@types/koa-router": "^7.0.27",
+    "@types/superagent": "^3.5.8",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-multer": "^1.0.2",
@@ -16,6 +17,7 @@
     "nodemon": "^1.17.3",
     "pg": "^7.4.1",
     "routing-controllers": "^0.7.7",
+    "superagent": "^3.8.3",
     "typeorm": "^0.1.16"
   },
   "scripts": {

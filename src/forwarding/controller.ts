@@ -2,6 +2,7 @@
 import { JsonController, Body,Post, HttpCode} from 'routing-controllers'
 import Forwarding from './entity'
 import UrlTable from '../webhooks-url/entity'
+import * as request from 'superagent'
 
 // import { Timestamp } from 'typeorm';
 
@@ -15,18 +16,32 @@ export default class ForwardingController {
     @Body() body: Forwarding) {
     
     const forwarding = new Forwarding()
-        forwarding.qid = body.qid
+        forwarding.qid = body.qobject.quiz_id
         forwarding.qobject = body.qobject
+        console.log('forwarding.qobject: ', forwarding.qobject)
         // Now fetch the url from the other table.
-        const address = await UrlTable.findOne({qid: body.qid})
-        // Because we imported the entity we don't need to use @Get to find the ID.
+        const address = await UrlTable.findOne({qid: forwarding.qid})
 
+        // Send the object we recieved to the address from UrlTable
+        if(address){
+            request
+            .post(address.url)
+            .send(forwarding.qobject)
+            .end((err, res) => {
+                if(res)
+                console.log(res)
+                else
+                console.log(err)
+            })
+        }
+        else {console.log('error')}
         forwarding.httpcode = body.httpcode
         forwarding.lasttry = 0
         forwarding.save()
-    return 'Thank you, bye bye...'
+    return 'Great! It worked...'
 
     }
 
 }
+
 
