@@ -13,7 +13,7 @@ export default class Forwarding extends BaseEntity {
   qid: number
 
   @Column('json', {nullable:false})
-  qobject: JSON
+  qobject: Qobject
 
   @Column('integer', {nullable:true})
   httpcode: number
@@ -21,4 +21,12 @@ export default class Forwarding extends BaseEntity {
   @Column('integer', {nullable:true})
   lasttry: number
 
+}
+//Define the interface of incoming object.
+interface Qobject {
+  id: number
+  user_id: number
+  teacher: boolean
+  quiz_id: number
+  score: number
 }
