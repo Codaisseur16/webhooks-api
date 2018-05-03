@@ -9,7 +9,7 @@ export default class Forwarding extends BaseEntity {
   @PrimaryGeneratedColumn()
   id?: number
 
-  @Column('integer', {nullable:false})
+  @Column('integer', {nullable:true})
   qid: number
 
   @Column('json', {nullable:false})
