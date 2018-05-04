@@ -18,8 +18,7 @@ export default class Forwarding extends BaseEntity {
   @Column('integer', {nullable:true})
   httpcode: number
 
-  @Column('integer', {nullable:true})
-  lasttry: number
+
 
 }
 //Define the interface of incoming object.
