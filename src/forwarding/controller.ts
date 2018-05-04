@@ -1,8 +1,12 @@
 // src/forwarding/controller.ts
-import { JsonController, Body,Post, HttpCode, NotFoundError } from 'routing-controllers'
+import { JsonController, Body,Post, HttpCode, NotFoundError, Get } from 'routing-controllers'
 import Forwarding from './entity'
 import UrlTable from '../webhooks-url/entity'
 import * as request from 'superagent'
+
+
+
+
 const sendToUrl = (url,tosave) => {
     request
         .post(url)
@@ -17,8 +21,24 @@ const sendToUrl = (url,tosave) => {
         })
 }
 
+export const retryFunction = async () => {
 
-// import { Timestamp } from 'typeorm';
+    const quizzesWith404Code = await Forwarding.find({httpcode: 404})
+    //Send each one again
+    
+     quizzesWith404Code.forEach(
+        async abcd => {
+            console.log('Retrying...' )
+        const address = await UrlTable.findOne({qid: abcd.qid})
+            if(address)
+            return sendToUrl(address.url,abcd)
+        }
+
+    )
+    setTimeout(retryFunction,10000)
+    
+}
+
 
 @JsonController()
 
@@ -33,26 +53,17 @@ export default class ForwardingController {
   
         forwarding.qid = body.qobject.quiz_id
         forwarding.qobject = body.qobject
-        // console.log('forwarding.qobject: ', forwarding.qobject)
+
         // Now fetch the url from the other table.
         const address = await UrlTable.findOne({qid: forwarding.qid})
         
         // Send the object we recieved to the address from UrlTable
         if(address){
             await sendToUrl(address.url,forwarding)
-            // request
-            // .post(address.url)
-            // .send(forwarding.qobject)
-            // .end((err, res) => {
-            //     if(res)
-            //     console.log(res)
-            //     else
-            //     console.log(err)
-            // })
         }
-        else {return 'thankyou! but no webhook assigned to this quiz!'}
-        return 'kthnxbi :)'
-
+        else {return 'Thankyou! But no webhook assigned to this quiz!'}
+        return 'Kthnxbi :)'
+        
     }
 
     // To test our Webhook we create a fake endpoint as a server that sometimes fails...
@@ -71,5 +82,6 @@ export default class ForwardingController {
     }
 
 }
+
 
 
