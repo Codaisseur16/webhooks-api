@@ -11,13 +11,10 @@ export default class UrlController {
     createUrl(
     @Body() body: UrlTable) {
     
-    const urltable = new UrlTable()
-        urltable.qid = body.qid
-        urltable.url = body.url
-        urltable.save()
+    body.save()
         return 'Webhook URL was saved.'
     }
-
+    
     @Put('/editwebhook')
     @HttpCode(200)
     async updateWebhook(
